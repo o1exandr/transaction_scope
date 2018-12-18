@@ -13,8 +13,7 @@ namespace transaction_scope
     {
         static void Main(string[] args)
         {
-            string strCon = ConfigurationManager
-               .AppSettings["ConnectionString"];
+            string strCon = ConfigurationManager.AppSettings["ConnectionString"];
             List<Doctor> doctors = new List<Doctor>
                 {
                     new Doctor
@@ -35,7 +34,7 @@ namespace transaction_scope
                     },
                     new Doctor
                     {
-                        Email="",
+                        Email="jan@gmail.com",
                         FirstName="Janna",
                         LastName="Stuart",
                         Kabinet="23B",
@@ -44,8 +43,7 @@ namespace transaction_scope
                 };
             try
             {
-                using (TransactionScope scope =
-                            new TransactionScope())
+                using (TransactionScope scope = new TransactionScope())
                 {
                     using (SqlConnection con = new SqlConnection(strCon))
                     {
@@ -92,7 +90,7 @@ namespace transaction_scope
                             if (string.IsNullOrEmpty(doctor.Email))
                                 throw new Exception($"Помилка при добавелі лікаря {doctor.Email}");
                             query = "INSERT INTO [dbo].[tblDoctor] " +
-                                "([StatusId],[FistName],[LastName],[Email],[Kabinet]) " +
+                                "([StatusId],[FirstName],[LastName],[Email],[Kabinet]) " +
                                 $"VALUES ({statusId},'{doctor.FirstName}'," +
                                 $"'{doctor.LastName}','{doctor.Email}','{doctor.Kabinet}')";
                             command.CommandText = query;
@@ -100,7 +98,6 @@ namespace transaction_scope
                             if (res != 1)
                                 throw new Exception($"Помилка при добавелі лікаря {doctor.Email}");
                         }
-
 
 
                     }
@@ -111,8 +108,6 @@ namespace transaction_scope
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                //Console.WriteLine("Викникла проблема " +
-                //    $"при добавлені {doctor.FirstName} {doctor.LastName}");
             }
 
 
